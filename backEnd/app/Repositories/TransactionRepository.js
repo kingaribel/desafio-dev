@@ -12,7 +12,8 @@ const InternalServerException = require("../Exceptions/InternalServerException")
 class TransactionRepository extends BaseRepository {
 
   constructor() {
-    super('Transaction')
+    super('Transaction');
+    this.storeRep = new BaseRepository('Store');
   }
 
   correctDate(date, time) {
@@ -98,6 +99,15 @@ class TransactionRepository extends BaseRepository {
       fs.unlinkSync(
         tmpFullPath
       );
+    }
+  }
+
+  async getStoreWithItsTransactions(store) {
+    const foundStore = await this.storeRep.list({options: { store } });
+    const foundTransactions = await this.list({options: {store}});
+    return {
+      store: foundStore,
+      transactions: foundTransactions
     }
   }
 }

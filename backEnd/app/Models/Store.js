@@ -5,15 +5,15 @@ const Model = use('Model')
 const Database = use('Database')
 
 class Store extends Model {
-  static findAll({ search }) {
+  static findAll({ search, options }) {
     const defaultColumns = ['stores.id', 'store_name', 'owner_name'];
     const subQuery = Database.select(...defaultColumns, Database.raw(`
-    (select sum(amount) from transactions
-    inner join transaction_types as trxTypes on trxTypes.id = transactions.transaction_type_id
-    where transactions.store_id = stores.id and operation = '+') as credit,
-    (select sum(amount) from transactions
-    inner join transaction_types as trxTypes on trxTypes.id = transactions.transaction_type_id
-    where transactions.store_id = stores.id and operation = '-') as debit`))
+        (select sum(amount) from transactions
+        inner join transaction_types as trxTypes on trxTypes.id = transactions.transaction_type_id
+        where transactions.store_id = stores.id and operation = '+') as credit,
+        (select sum(amount) from transactions
+        inner join transaction_types as trxTypes on trxTypes.id = transactions.transaction_type_id
+        where transactions.store_id = stores.id and operation = '-') as debit`))
       .from('stores')
       .innerJoin('store_owners as owners', 'owners.id', 'stores.owner_id');
 
@@ -23,6 +23,9 @@ class Store extends Model {
         if (search) {
           q.where("store_name", "like", `%${search}%`);
           q.orWhere("owner_name", "like", `%${search}%`);
+        }
+        if(options && options.store) {
+          q.where('stores.id', options.store)
         }
       })
       .orderBy("store_name");

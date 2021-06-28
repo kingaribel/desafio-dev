@@ -9,14 +9,14 @@ class TransactionController {
 
   index({ request, response }) {
 
-    let { search, pagination } = request.all();
-    return this.transactionRep.list({ search, options: { pagination } })
+    let { search, pagination, storeId: store } = request.all();
+    return this.transactionRep.list({ search, options: { pagination, store } })
       .then((transactions) => {
         response.ok(transactions)
       })
   }
 
-  async store ({ request, response }) {
+  store ({ request, response }) {
     const transactionFile = request.file('file');
 
     return this.transactionRep.importFromFile(transactionFile)
@@ -25,7 +25,11 @@ class TransactionController {
       }));
   }
 
-  async show ({ params, request, response, view }) {
+  getStoreWithItsTransactions ({ params, response }) {
+    const {storeId: store} = params;
+
+    return this.transactionRep.getStoreWithItsTransactions(store)
+      .then((store) => response.ok(store));
   }
 
   /**
