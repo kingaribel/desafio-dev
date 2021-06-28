@@ -8,8 +8,7 @@ class TransactionSchema extends Schema {
     this.create('transactions', (table) => {
       table.increments()
       table.integer('transaction_type_id').unsigned().index().references('id').on('transaction_types').onDelete('cascade')
-      table.date('date')
-      table.time('hour')
+      table.dateTime('occurrency_date')
       table.float('amount')
       table.string('cpf_benefited')
       table.string('card_number', 16)

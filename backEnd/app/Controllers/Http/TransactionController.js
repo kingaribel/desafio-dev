@@ -1,57 +1,30 @@
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const TransactionRepository = use("App/Repositories/TransactionRepository");
 
-/**
- * Resourceful controller for interacting with transactions
- */
 class TransactionController {
-  /**
-   * Show a list of all transactions.
-   * GET transactions
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  constructor() {
+    this.transactionRep = new TransactionRepository();
   }
 
-  /**
-   * Render a form to be used for creating a new transaction.
-   * GET transactions/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  index({ request, response }) {
+
+    let { search, pagination } = request.all();
+    return this.transactionRep.list({ search, options: { pagination } })
+      .then((transactions) => {
+        response.ok(transactions)
+      })
   }
 
-  /**
-   * Create/save a new transaction.
-   * POST transactions
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async store ({ request, response }) {
+    const transactionFile = request.file('file');
+
+    return this.transactionRep.importFromFile(transactionFile)
+      .then(() => response.ok(null, {
+        message: 'Transações Importadas Com Sucesso!'
+      }));
   }
 
-  /**
-   * Display a single transaction.
-   * GET transactions/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async show ({ params, request, response, view }) {
   }
 

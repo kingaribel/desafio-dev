@@ -7,3 +7,5 @@ Route.get('/', () => {
 })
 
 Route.get('transaction-types', 'TransactionTypeController.index');
+Route.get('transactions', 'TransactionController.index');
+Route.post('transactions/upload-file', 'TransactionController.store');

@@ -4,14 +4,14 @@ const BaseRepository = use("App/Repositories/BaseRepository");
 
 class TransactionTypeController {
   constructor() {
-    this.transactionRep = new BaseRepository('TransactionType');
+    this.transactionTypeRep = new BaseRepository('TransactionType');
   }
   index({ request, response }) {
 
     let { search, pagination } = request.all();
-    return this.transactionRep.list({ search, options: { pagination } })
-      .then((transactions) => {
-        response.ok(transactions)
+    return this.transactionTypeRep.list({ search, options: { pagination } })
+      .then((transactionsTypes) => {
+        response.ok(transactionsTypes)
       })
   }
 }
