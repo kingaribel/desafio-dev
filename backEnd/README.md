@@ -18,6 +18,7 @@ Este aplicação foi construída usando [AdonisJS](https://legacy.adonisjs.com/d
 - Execute `npm install` para instalar todas as dependências
 - Faz uma cópia do `.env.example` e renomeia para `.env`
 - Faz uma cópia do `.env.example` e renomeia para `.env.testing` em ordem para poder correr os testes
+- Execute `adonis test` correr os testes
 - Execute `adonis key:generate` para gerar a chave secreta
 - Execute `adonis migration:run` para configurar o banco de dados
 - Execute `adonis seed` para popular o banco de dados com dados padrões
