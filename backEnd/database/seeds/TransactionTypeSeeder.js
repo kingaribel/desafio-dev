@@ -22,7 +22,7 @@ class TransactionTypeSeeder {
         operation: '+'
       },
       {
-        description: 'Recebimento Empréstimo	',
+        description: 'Recebimento Empréstimo',
         operation: '+'
       },
       {
@@ -30,11 +30,11 @@ class TransactionTypeSeeder {
         operation: '+'
       },
       {
-        description: 'Recebimento TED	',
+        description: 'Recebimento TED',
         operation: '+'
       },
       {
-        description: 'Recebimento DOC	',
+        description: 'Recebimento DOCs',
         operation: '+'
       },
       {

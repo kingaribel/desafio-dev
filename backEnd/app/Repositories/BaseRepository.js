@@ -46,7 +46,7 @@ class BaseRepository {
 
       return options && options.pagination
         ? records.paginate(options.pagination.page, options.pagination.perPage)
-        : records.fetch();
+        : (typeof records.fetch == 'function' ? records.fetch() : records);
     } catch (e) {
       console.log(e)
       throw new InternalServerException(

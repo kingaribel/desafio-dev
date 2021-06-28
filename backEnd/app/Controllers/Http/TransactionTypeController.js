@@ -8,7 +8,7 @@ class TransactionTypeController {
   }
   index({ request, response }) {
 
-    let { search, pagination } = request.all();
+    const { search, pagination } = request.all();
     return this.transactionTypeRep.list({ search, options: { pagination } })
       .then((transactionsTypes) => {
         response.ok(transactionsTypes)
