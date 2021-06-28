@@ -1,27 +1,25 @@
-# FronteEnd
+# Inicio
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.1.
+Este projeto foi gerado com [Angular CLI](https://github.com/angular/angular-cli) versão 12.0.1. Certifique-se de ter o [Angular CLI](https://github.com/angular/angular-cli#installation) instalado globalmente. Usamos [npm](https://nodejs.org/en) para gerenciar as dependências, por isso recomendamos fortemente que você o use. Você pode instalá-lo [aqui](https://nodejs.org/en/download) e, em seguida, executar `npm install` para resolver todas as dependências (pode demorar um ou dois minutos).
 
-## Development server
+### Conexão com a API
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Para que a aplicação se comunique com o banco de dados, temos um servidor de API para que a aplicação faça solicitações. Você pode ver [as especificações da API aqui](https://github.com/kingaribel/desafio-dev/blob/main/backEnd) que contém todas as rotas e respostas para o servidor.
 
-## Code scaffolding
+O código-fonte do servidor backend (disponível para node.js) pode ser encontrado no [repositório desafio-dev](https://github.com/kingaribel/desafio-dev).
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Se você quiser alterar a URL da API para um outro servidor, simplesmente edite `src/environment/ environment.ts` e altere` baseUrl` para a URL do servidor que deseja (ou seja, `localhost:3333/api`)
 
-## Build
+Execute `ng serve` para um servidor de desenvolvimento. Navegue até `http://localhost:4200/`. O aplicativo será recarregado automaticamente se você alterar qualquer um dos arquivos de origem.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Construindo o projeto
+Execute `ng build` para construir o projeto. Os artefatos de construção serão armazenados no diretório `dist/`. Use o sinalizador `--prod` para uma construção de produção.
 
-## Running unit tests
+## Visão geral da funcionalidade
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+O aplicativo é um sistema para importação dos dados de transações de variadíssimas lojas através de um ficheiro de texto, chamado CNAB. Ele usa uma API personalizada para todas as solicitações.
 
-## Running end-to-end tests
+**Funcionalidade geral:**
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- Importação do [arquivo CNAB](https://github.com/ByCodersTec/desafio-ruby-on-rails/blob/master/CNAB.txt)
+- Transações importadas
