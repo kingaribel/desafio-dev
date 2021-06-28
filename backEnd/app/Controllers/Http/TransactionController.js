@@ -20,7 +20,7 @@ class TransactionController {
     const transactionFile = request.file('file');
 
     return this.transactionRep.importFromFile(transactionFile)
-      .then(() => response.ok(null, {
+      .then((transactions) => response.ok(transactions, {
         message: 'Transações Importadas Com Sucesso!'
       }));
   }

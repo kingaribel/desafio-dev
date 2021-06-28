@@ -17,13 +17,13 @@ class TransactionRepository extends BaseRepository {
   }
 
   correctDate(date, time) {
-    const year = date.slice(0,4);
-    const month = date.slice(4,6);
-    const day = date.slice(6,8);
+    const year = date.slice(0, 4);
+    const month = date.slice(4, 6);
+    const day = date.slice(6, 8);
 
-    const hour = time.slice(0,2);
-    const minutes = time.slice(2,4);
-    const seconds = time.slice(4,6);
+    const hour = time.slice(0, 2);
+    const minutes = time.slice(2, 4);
+    const seconds = time.slice(4, 6);
 
     const lineDate = new Date(`${year}/${month}/${day} ${hour}:${minutes}:${seconds} GMT-0300`);
     return lineDate;
@@ -54,7 +54,7 @@ class TransactionRepository extends BaseRepository {
   }
 
   async findOwner(owner_name, trx = null) {
-    const foundOwner = await StoreOwner.findOrCreate({owner_name}, {owner_name}, trx);
+    const foundOwner = await StoreOwner.findOrCreate({ owner_name }, { owner_name }, trx);
     return foundOwner;
   }
 
@@ -74,6 +74,7 @@ class TransactionRepository extends BaseRepository {
     const tmpFullPath = `${tmpPath}/${tmpFileName}`;
 
     const trx = await Database.beginTransaction();
+    const importedTrxsId = [];
     try {
       const fileLiner = new lineByLine(tmpFullPath);
       let line;
@@ -81,16 +82,19 @@ class TransactionRepository extends BaseRepository {
         const lineConverted = line.toString();
         const { owner_name, store_name, transactionPayload } = this.normalizeLine(lineConverted);
         const foundOwner = await this.findOwner(owner_name.trim());
-        const foundStore = await this.findStore({store_name: store_name.trim(), owner_id: foundOwner.id});
+        const foundStore = await this.findStore({ store_name: store_name.trim(), owner_id: foundOwner.id });
 
-        await Transaction.create({
+        const createdTrx = await Transaction.create({
           ...transactionPayload,
           store_id: foundStore.id,
-        })
+        });
+
+        importedTrxsId.push(createdTrx.id);
       }
 
+      const transactions = await this.list({ options: { transactionsId: importedTrxsId } })
       await trx.commit();
-      return;
+      return transactions;
     } catch (e) {
       await trx.rollback();
       console.log(e);
@@ -103,8 +107,8 @@ class TransactionRepository extends BaseRepository {
   }
 
   async getStoreWithItsTransactions(store) {
-    const foundStore = await this.storeRep.list({options: { store } });
-    const foundTransactions = await this.list({options: {store}});
+    const foundStore = await this.storeRep.list({ options: { store } });
+    const foundTransactions = await this.list({ options: { store } });
     return {
       store: foundStore[0],
       transactions: foundTransactions
