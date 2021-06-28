@@ -106,7 +106,7 @@ class TransactionRepository extends BaseRepository {
     const foundStore = await this.storeRep.list({options: { store } });
     const foundTransactions = await this.list({options: {store}});
     return {
-      store: foundStore,
+      store: foundStore[0],
       transactions: foundTransactions
     }
   }
