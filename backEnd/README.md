@@ -132,7 +132,7 @@ A REST API para o aplicativo de exemplo é descrita abaixo. Os exemplos abaixo f
 
 ### Request
 
-`GET /transactions/upload-file`
+`POST /transactions/upload-file`
 
     http://localhost:3333/transactions/upload-file
 OBS: Envie na requisição o arquivo com a estrutura do  [CNAB](https://github.com/ByCodersTec/desafio-ruby-on-rails/blob/master/CNAB.txt) que pretende fazer a importação dos dados.
