@@ -9,3 +9,6 @@ tmp
 
 # The development sqlite file
 database/*.sqlite
+
+# the environment test variables
+.env.testing
